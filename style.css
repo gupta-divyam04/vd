@@ -1,0 +1,11 @@
+.h{
+    width: 26%;
+    height: 10%;
+    font-size: 40px;
+    text-align: center;
+}
+canvas{
+    margin-top: 50px;
+    box-shadow: 10px 10px 10px gray;
+    border-radius: 10px;
+}

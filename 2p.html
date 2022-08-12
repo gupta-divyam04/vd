@@ -1,0 +1,68 @@
+<html>
+<head>
+
+	<title>Object Detection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body style="background-image: url(https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=2000); background-size: cover;">
+  <center>
+    <h1><b>Kitchen</b></h1>
+    <a href="index.html"><button style="float: right;margin-top: -70px;" class="btn btn-success">Back</button></a>
+    <br>
+    <br>
+    
+  </center>
+  <script>
+
+
+    object=[];
+function preload(){
+imag= loadImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/small-kitchen-ideas-1642006005.jpg?crop=1.00xw:0.753xh;0,0.166xh&resize=1200:*")
+}
+function setup(){
+canvas= createCanvas(640, 420)
+canvas.center()
+objectDectation= ml5.objectDetector("cocossd", modelLoaded)
+}
+function draw(){
+image(imag,0,0,640,420)
+//text
+if(stot != ""){
+    for (var i = 0; i < object.length; i++) {
+percent= floor(object[i].confidence * 100)+"%"
+fill("red")
+text(object[i].label+" "+percent, object[i].x, object[i].y)
+noFill()
+stroke("red")
+rect(object[i].x,object[i].y,object[i].width,object[i].height )
+    }
+}
+}
+stot="";
+
+function modelLoaded(){
+    console.log("model loaded")
+    stot= true;
+objectDectation.detect(imag, gotResult)
+}
+function gotResult(e,r){
+if (e) {
+    console.log(e)
+} else {
+    console.log(r)
+    object=r;
+}
+}
+  </script>
+</body>
+</html>
